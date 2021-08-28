@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const keepAlive = require("./server")
 
 const botVersion = "v3.0-dev";
 
@@ -92,4 +93,5 @@ client.on("message", (msg) => {
 
 // ---
 
+keepAlive();
 client.login(process.env.TOKEN);
