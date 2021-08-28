@@ -16,8 +16,6 @@ This is a simple bot with a few commands that I made for my own Discord-Server.
 
 **$faq <topic>** - Answers some general questions. Use `$faq list` for a list of topics.
 
-**$stats <type>** - Provides stats for the specified media. Use `$stats list` for a list.
-
 ---
 
 ## My Social Media
