@@ -2,6 +2,7 @@
 
 ## Info
 My original Python-Bot rebuilt in JavaScript
+
 This is a simple bot with a few commands that I made for my own Discord-Server.
 
 ---
