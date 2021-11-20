@@ -1,8 +1,9 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const keepAlive = require("./server");
+const { DiscordInteractions } = require("slash-commands");
 
-const botVersion = "v3.0-public";
+const botVersion = "v3.1-public";
 
 // ---
 
@@ -19,6 +20,52 @@ function generatePing() {
 }
 
 // ---
+// Create slash commands
+// ---
+
+async function addCommands() {
+  const interaction = new DiscordInteractions({
+    applicationId: process.env.APPID,
+    authToken: process.env.TOKEN,
+    publicKey: process.env.PUBLICKEY,
+  });
+
+  const slash_testbot = {
+    name: "testbot",
+    description: "Checks if the bot is online.",
+  };
+  await interaction
+    .createApplicationCommand(slash_testbot, process.env.GUILD)
+    .then(console.log)
+    .catch(console.error);
+
+  const slash_help = {
+    name: "help",
+    description: "Shows the list of commands.",
+  };
+  await interaction
+    .createApplicationCommand(slash_help, process.env.GUILD)
+    .then(console.log)
+    .catch(console.error);
+
+  // const slash_dl = {
+  //  name: "download",
+  //  description: "Provides the download link for the specified project.",
+  //  options: [
+  //    {
+  //      name: "project",
+  //      description: 'Use "list" to get a list of available projects',
+  //      type: String,
+  //    }
+  //  ],
+  // };
+  // await interaction
+  //  .createApplicationCommand(slash_dl, process.env.GUILD)
+  //  .then(console.log)
+  //  .catch(console.error);
+}
+
+// ---
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
@@ -28,7 +75,7 @@ client.on("ready", () => {
     activity: {
       name: "Subscribe!",
       type: "PLAYING",
-      url: "https://www.youtube.com/theminer_02",
+      url: "https://www.youtube.com/theminer02",
     },
   });
 });
@@ -36,8 +83,17 @@ client.on("ready", () => {
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
 
-  if (interaction.commandName === "ping") {
-    await interaction.reply("Pong!");
+  if (interaction.commandName == "help") {
+    await interaction.reply("help");
+    return;
+  }
+  if (interaction.commandName == "testbot") {
+    await interaction.reply("testbot");
+    return;
+  }
+  if (interaction.commandName == "download") {
+    await interaction.reply("download");
+    return;
   }
 });
 
@@ -113,7 +169,7 @@ client.on("message", (msg) => {
     faq_bot =
       "**__Bot__**\n**Commands:** Use `$help`\n**General Info:** I made this bot on my own and its completely customized for me. You can't use it on your own server.\n**Version:** " +
       botVersion +
-      "\n**Numbers:** ~200 lines of code, ~10 hours of work";
+      "\n**Numbers:** ~260 lines of code, ~11 hours of work";
     faq_donate =
       "**__Donate__**\nI don't know why you would want to donate something, but if you do, here you go:\n<https://streamlabs.com/theminer_02/tip>";
     faq_list =
@@ -158,7 +214,12 @@ client.on("message", (msg) => {
   // ---------------------------------------------------------------
   // Add reaction to messages that contain TM-Bot
   // ---------------------------------------------------------------
-  if (msg.mentions.has(client.user.id)) {
+  if (
+    msg.mentions.has(client.user.id) ||
+    msg.content.includes("tmbot") ||
+    msg.content.includes("tm-bot") ||
+    msg.content.includes("TM-Bot")
+  ) {
     if (msg.content.includes("@here") || msg.content.includes("@everyone")) {
       return;
     }
@@ -170,5 +231,6 @@ client.on("message", (msg) => {
 
 // ---
 
+addCommands();
 keepAlive();
 client.login(process.env.TOKEN);
