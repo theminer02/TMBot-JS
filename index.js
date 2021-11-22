@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const keepAlive = require("./server");
 const { DiscordInteractions } = require("slash-commands");
 
-const botVersion = "v3.1-public";
+const botVersion = "v3.2-public";
 
 // ---
 
@@ -225,6 +225,16 @@ client.on("message", (msg) => {
     }
     msg.react("👀");
     console.log("Added a reaction");
+    return;
+  }
+  
+  // ---------------------------------------------------------------
+  // Add voting options to suggestions
+  // ---------------------------------------------------------------
+  if (msg.channel == 912433891976040498) {
+    msg.react("🔼");
+    msg.react("🔽");
+    console.log("Suggestion - Added voting options");
     return;
   }
 });
