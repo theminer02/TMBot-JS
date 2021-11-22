@@ -227,15 +227,31 @@ client.on("message", (msg) => {
     console.log("Added a reaction");
     return;
   }
-  
+
   // ---------------------------------------------------------------
-  // Add voting options to suggestions
+  // Add voting options & tread to suggestions
   // ---------------------------------------------------------------
   if (msg.channel == 912433891976040498) {
+    // voting options
     msg.react("🔼");
     msg.react("🔽");
     console.log("Suggestion - Added voting options");
-    return;
+
+    var suggestion_name = msg.content.split(", ");
+    var channel = msg.channel;
+    // createSuggestionTread(suggestion_name,channel)
+
+    async function createSuggestionTread(suggestion_name, channel) {
+      var suggestion_name = suggestion_name[0];
+      var channel = channel;
+
+      const thread = await channel.threads.create({
+        name: suggestion_name,
+        autoArchiveDuration: 60,
+        reason: "Create tread for suggestion",
+      });
+      console.log(`Created suggestion thread: ${thread.name}`);
+    }
   }
 });
 
