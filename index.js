@@ -1,111 +1,116 @@
-const Discord = require("discord.js");
-const client = new Discord.Client();
+const { Client, Intents } = require('discord.js');
 const keepAlive = require("./server");
-const { DiscordInteractions } = require("slash-commands");
 
-const botVersion = "v3.2-public";
+const client = new Client({
+	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
+});
+
+const botVersion = "v4.1-dev";
 
 // ---
 
 function showHelp() {
   commands =
-    "__The commands:__\n\n**$help** - Shows this list of commands.\n**$testbot** - Checks if the bot is online.\n**$dl <project>** - Provides the download link for the specified project. Use `$dl list` for a list of projects.\n**$faq <topic>** - Answers some general questions. Use `$faq list` for a list of topics.";
+    "__The commands:__\n\n**/help** - Shows this list of commands.\n**/testbot** - Checks if the bot is online.\n**$dl <project>** - Provides the download link for the specified project. Use `$dl list` for a list of projects.\n**$faq <topic>** - Answers some general questions. Use `$faq list` for a list of topics.";
   return commands;
 }
 
-function generatePing() {
+function getPing() {
   generatedPing = Math.floor(Math.random() * 44 + 1);
   ping = generatedPing + "ms";
   return ping;
 }
 
 // ---
-// Create slash commands
-// ---
-
-async function addCommands() {
-  const interaction = new DiscordInteractions({
-    applicationId: process.env.APPID,
-    authToken: process.env.TOKEN,
-    publicKey: process.env.PUBLICKEY,
-  });
-
-  const slash_testbot = {
-    name: "testbot",
-    description: "Checks if the bot is online.",
-  };
-  await interaction
-    .createApplicationCommand(slash_testbot, process.env.GUILD)
-    .then(console.log)
-    .catch(console.error);
-
-  const slash_help = {
-    name: "help",
-    description: "Shows the list of commands.",
-  };
-  await interaction
-    .createApplicationCommand(slash_help, process.env.GUILD)
-    .then(console.log)
-    .catch(console.error);
-
-  // const slash_dl = {
-  //  name: "download",
-  //  description: "Provides the download link for the specified project.",
-  //  options: [
-  //    {
-  //      name: "project",
-  //      description: 'Use "list" to get a list of available projects',
-  //      type: String,
-  //    }
-  //  ],
-  // };
-  // await interaction
-  //  .createApplicationCommand(slash_dl, process.env.GUILD)
-  //  .then(console.log)
-  //  .catch(console.error);
-}
-
-// ---
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
-
+  
   client.user.setPresence({
     status: "online",
     activity: {
-      name: "Subscribe!",
-      type: "PLAYING",
+      name: "Slash Commands!",
+      type: "LISTENING",
       url: "https://www.youtube.com/theminer02",
     },
   });
+
+  // ---------------------------------------------------------------
+  // Slash commands
+  // ---------------------------------------------------------------
+  
+  client.api.applications(process.env.APPID).guilds(process.env.GUILD).commands.post({
+      data: {
+          name: "testbot",
+          description: "Checks if the bot is online"
+          // possible options here e.g. options: [{...}]
+      }
+  });
+  
+  client.api.applications(process.env.APPID).guilds(process.env.GUILD).commands.post({
+      data: {
+          name: "help",
+          description: "Shows a list of all commands"
+          // possible options here e.g. options: [{...}]
+      }
+  });
+  
+  client.api.applications(process.env.APPID).guilds(process.env.GUILD).commands.post({
+      data: {
+          name: "download",
+          description: "Get download links for my projects"
+          // options: [{...}]
+      }
+  });
+
+  // ---
+  // Respond to Slash Commands
+  // ---
+
+  client.ws.on('INTERACTION_CREATE', async interaction => {
+      const command = interaction.data.name.toLowerCase();
+      const args = interaction.data.options;
+
+  // $testbot - Checks if the bot is online.
+      if (command === 'testbot'){ 
+        client.api.interactions(interaction.id, interaction.token).callback.post({
+          data: {
+            type: 4,
+            data: {
+              content: "Bot is online. **" + getPing() + "**"
+            }
+          }
+        })
+        console.log("testbot - Answer sent");
+      }
+
+  // $help - Shows the list of commands.
+      if (command === 'help'){ 
+        client.api.interactions(interaction.id, interaction.token).callback.post({
+          data: {
+            type: 4,
+            data: {
+              content: showHelp()
+            }
+          }
+        })
+        console.log("help - Answer sent");
+      }
+  });
 });
 
-client.on("interactionCreate", async (interaction) => {
-  if (!interaction.isCommand()) return;
+// ---
+// Remove on 31.12.2021 - Respond to $ prefix
+// ---
 
-  if (interaction.commandName == "help") {
-    await interaction.reply("help");
-    return;
-  }
-  if (interaction.commandName == "testbot") {
-    await interaction.reply("testbot");
-    return;
-  }
-  if (interaction.commandName == "download") {
-    await interaction.reply("download");
-    return;
-  }
-});
-
-client.on("message", (msg) => {
+client.on("messageCreate", msg => {
   if (msg.author.bot) return;
-
   // ---------------------------------------------------------------
   // $help - Shows the list of commands.
   // ---------------------------------------------------------------
   if (msg.content === "$help") {
     msg.channel.send(showHelp());
-    console.log("help - Answer sent");
+    console.log("help - Answer sent (old prefix)");
     return;
   }
 
@@ -113,8 +118,8 @@ client.on("message", (msg) => {
   // $testbot - Checks if the bot is online.
   // ---------------------------------------------------------------
   if (msg.content === "$testbot") {
-    msg.channel.send("Bot is online. **" + generatePing() + "**");
-    console.log("testbot - Answer sent");
+    msg.channel.send("Bot is online. **" + getPing() + "**");
+    console.log("testbot - Answer sent (old prefix)");
     return;
   }
 
@@ -145,15 +150,15 @@ client.on("message", (msg) => {
       msg.channel.send(dl_hytale);
     } else if (project[1] == "list") {
       msg.channel.send(dl_list);
-      console.log("dl - Project List sent");
+      console.log("dl - Project List sent (old prefix)");
       return;
     } else {
       msg.channel.send(dl_unknown);
-      console.log("dl - Unknown Project sent");
+      console.log("dl - Unknown Project sent (old prefix)");
       return;
     }
 
-    console.log("dl - " + project[1] + " sent");
+    console.log("dl - " + project[1] + " sent (old prefix)");
     return;
   }
 
@@ -169,7 +174,7 @@ client.on("message", (msg) => {
     faq_bot =
       "**__Bot__**\n**Commands:** Use `$help`\n**General Info:** I made this bot on my own and its completely customized for me. You can't use it on your own server.\n**Version:** " +
       botVersion +
-      "\n**Numbers:** ~260 lines of code, ~11 hours of work";
+      "\n**Numbers:** ~260 lines of code, ~11 hours of work\n**Uptime:**<https://stats.uptimerobot.com/rVzlqsrnNL/787785032>";
     faq_donate =
       "**__Donate__**\nI don't know why you would want to donate something, but if you do, here you go:\n<https://streamlabs.com/theminer_02/tip>";
     faq_list =
@@ -190,15 +195,15 @@ client.on("message", (msg) => {
       msg.channel.send(faq_donate);
     } else if (topic[1] == "list") {
       msg.channel.send(faq_list);
-      console.log("faq - Topic List sent");
+      console.log("faq - Topic List sent (old prefix)");
       return;
     } else {
       msg.channel.send(faq_unknown);
-      console.log("faq - Unknown Topic sent");
+      console.log("faq - Unknown Topic sent (old prefix)");
       return;
     }
 
-    console.log("faq - " + topic[1] + " sent");
+    console.log("faq - " + topic[1] + " sent (old prefix)");
     return;
   }
 
@@ -207,7 +212,7 @@ client.on("message", (msg) => {
   // ---------------------------------------------------------------
   if (msg.content.startsWith("$")) {
     msg.channel.send("```I dont know this command. Try $help```");
-    console.log("Unknown command - Answer sent");
+    console.log("Unknown command - Answer sent (old prefix)");
     return;
   }
 
@@ -227,36 +232,35 @@ client.on("message", (msg) => {
     console.log("Added a reaction");
     return;
   }
-
+  
   // ---------------------------------------------------------------
   // Add voting options & tread to suggestions
   // ---------------------------------------------------------------
-  if (msg.channel == 912433891976040498) {
+  if (msg.channel == 912433891976040498  || msg.channel == 914098259784531989) {
+    
     // voting options
     msg.react("🔼");
     msg.react("🔽");
     console.log("Suggestion - Added voting options");
 
-    var suggestion_name = msg.content.split(", ");
-    var channel = msg.channel;
-    // createSuggestionTread(suggestion_name,channel)
+    var msg_split = msg.content.split(" ")
+    var thread_name = msg_split[0] + " - " + msg_split[1] + " " + msg_split[2]
 
-    async function createSuggestionTread(suggestion_name, channel) {
-      var suggestion_name = suggestion_name[0];
-      var channel = channel;
+    createTread()
 
-      const thread = await channel.threads.create({
-        name: suggestion_name,
-        autoArchiveDuration: 60,
-        reason: "Create tread for suggestion",
-      });
-      console.log(`Created suggestion thread: ${thread.name}`);
+    async function createTread() {
+      const thread = await msg.startThread({
+          name: thread_name,
+          autoArchiveDuration: 1440,
+          // type: 'GUILD_PRIVATE_THREAD',
+          reason: 'Create thread for suggestion',
+        });
+      console.log(`Created thread: ${thread.name}`);
     }
-  }
+  };
 });
 
 // ---
 
-addCommands();
 keepAlive();
 client.login(process.env.TOKEN);
