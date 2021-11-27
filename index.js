@@ -5,7 +5,7 @@ const client = new Client({
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
 });
 
-const botVersion = "v4.1-dev";
+const botVersion = "v4.2-public";
 
 // ---
 
@@ -142,13 +142,13 @@ client.on("messageCreate", msg => {
     var project = msg.content.split(" ");
     // console.log(project);
 
-    if (project[1] == "MedievalCity") {
+    if (project[1] == "MedievalCity" || project[1] == "Medieval" || project[1] == "medieval") {
       msg.channel.send(dl_medieval);
-    } else if (project[1] == "TM-Zoo") {
+    } else if (project[1] == "TM-Zoo" || project[1] == "tmzoo" || project[1] == "tm-zoo") {
       msg.channel.send(dl_zoo);
-    } else if (project[1] == "Hytale") {
+    } else if (project[1] == "Hytale" || project[1] == "hytale") {
       msg.channel.send(dl_hytale);
-    } else if (project[1] == "list") {
+    } else if (project[1] == "List" || project[1] == "list") {
       msg.channel.send(dl_list);
       console.log("dl - Project List sent (old prefix)");
       return;
@@ -172,9 +172,9 @@ client.on("messageCreate", msg => {
     faq_links =
       "**__My social media__**\n**YouTube:** <https://youtube.com/theminer02>\n**Instagram:** <https://instagram.com/theminer_02>\n**Twitter:** <https://twitter.com/theminer_02>\n**PlanetMinecraft:** <https://planetminecraft.com/member/theminer02>\n**Website:** <https://theminer02.com/>\n**Twitch *(german)*:** <https://www.twitch.tv/theminer_02>";
     faq_bot =
-      "**__Bot__**\n**Commands:** Use `$help`\n**General Info:** I made this bot on my own and its completely customized for me. You can't use it on your own server.\n**Version:** " +
+      "**__Bot__**\n**Commands:** Use `/help`\n**General Info:** I made this bot on my own and its completely customized for me. You can't use it on your own server.\n**Version:** " +
       botVersion +
-      "\n**Numbers:** ~260 lines of code, ~11 hours of work\n**Uptime:**<https://stats.uptimerobot.com/rVzlqsrnNL/787785032>";
+      "\n**Nerd stuff:** ~300 lines of code, ~12 hours of work - I'm using `discord.js v13.2.0` & the bot is currently hosted on <Replit.com>\n*Uptime: *<https://stats.uptimerobot.com/rVzlqsrnNL/787785032>";
     faq_donate =
       "**__Donate__**\nI don't know why you would want to donate something, but if you do, here you go:\n<https://streamlabs.com/theminer_02/tip>";
     faq_list =
@@ -185,15 +185,15 @@ client.on("messageCreate", msg => {
     var topic = msg.content.split(" ");
     // console.log(faqtopic);
 
-    if (topic[1] == "Invite") {
+    if (topic[1] == "Invite" || topic[1] == "invite") {
       msg.channel.send(faq_invite);
-    } else if (topic[1] == "Links") {
+    } else if (topic[1] == "Links" || topic[1] == "links") {
       msg.channel.send(faq_links);
-    } else if (topic[1] == "Bot") {
+    } else if (topic[1] == "Bot" || topic[1] == "bot") {
       msg.channel.send(faq_bot);
-    } else if (topic[1] == "Donate") {
+    } else if (topic[1] == "Donate" || topic[1] == "donate") {
       msg.channel.send(faq_donate);
-    } else if (topic[1] == "list") {
+    } else if (topic[1] == "List" || topic[1] == "list") {
       msg.channel.send(faq_list);
       console.log("faq - Topic List sent (old prefix)");
       return;
@@ -255,7 +255,7 @@ client.on("messageCreate", msg => {
           // type: 'GUILD_PRIVATE_THREAD',
           reason: 'Create thread for suggestion',
         });
-      console.log(`Created thread: ${thread.name}`);
+      console.log(`Suggestion - Created thread: ${thread.name}`);
     }
   };
 });
