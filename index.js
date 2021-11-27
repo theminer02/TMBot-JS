@@ -174,7 +174,7 @@ client.on("messageCreate", msg => {
     faq_bot =
       "**__Bot__**\n**Commands:** Use `/help`\n**General Info:** I made this bot on my own and its completely customized for me. You can't use it on your own server.\n**Version:** " +
       botVersion +
-      "\n**Nerd stuff:** ~300 lines of code, ~12 hours of work - I'm using `discord.js v13.2.0` & the bot is currently hosted on <Replit.com>\n*Uptime: *<https://stats.uptimerobot.com/rVzlqsrnNL/787785032>";
+      "\n**Nerd stuff:** ~300 lines of code, ~12 hours of work - I'm using `discord.js v13.2.0` & the bot is currently hosted on Replit\n*Uptime:* <https://stats.uptimerobot.com/rVzlqsrnNL/787785032>";
     faq_donate =
       "**__Donate__**\nI don't know why you would want to donate something, but if you do, here you go:\n<https://streamlabs.com/theminer_02/tip>";
     faq_list =
