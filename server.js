@@ -1,9 +1,10 @@
 const express = require("express")
+// const page = require("./page.html");
 
 const server = express()
 
 server.all("/", (req, res) => {
-  res.send("Bot is online")
+  res.send("alive")
 })
 
 function keepAlive() {

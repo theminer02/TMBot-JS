@@ -5,7 +5,7 @@ const client = new Client({
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
 });
 
-const botVersion = "v4.2-public";
+const botVersion = "v4.3-dev";
 
 // ---
 
@@ -21,6 +21,11 @@ function getPing() {
   return ping;
 }
 
+function useSlashCommands() {
+  text = "My bot will stop responding to the `$` prefix on **December 31st 2021**\nTry out slash commands!\n";
+  return text;
+}
+
 // ---
 
 client.on("ready", () => {
@@ -29,8 +34,8 @@ client.on("ready", () => {
   client.user.setPresence({
     status: "online",
     activity: {
-      name: "Slash Commands!",
-      type: "LISTENING",
+      name: "Subscribe!",
+      type: "PLAYING",
       url: "https://www.youtube.com/theminer02",
     },
   });
@@ -55,6 +60,7 @@ client.on("ready", () => {
       }
   });
   
+  /*
   client.api.applications(process.env.APPID).guilds(process.env.GUILD).commands.post({
       data: {
           name: "download",
@@ -62,6 +68,7 @@ client.on("ready", () => {
           // options: [{...}]
       }
   });
+  */
 
   // ---
   // Respond to Slash Commands
@@ -103,12 +110,13 @@ client.on("ready", () => {
 // Remove on 31.12.2021 - Respond to $ prefix
 // ---
 
-client.on("messageCreate", msg => {
+client.on("messageCreate", async msg => {
   if (msg.author.bot) return;
   // ---------------------------------------------------------------
   // $help - Shows the list of commands.
   // ---------------------------------------------------------------
   if (msg.content === "$help") {
+    msg.channel.send(useSlashCommands());
     msg.channel.send(showHelp());
     console.log("help - Answer sent (old prefix)");
     return;
@@ -118,15 +126,17 @@ client.on("messageCreate", msg => {
   // $testbot - Checks if the bot is online.
   // ---------------------------------------------------------------
   if (msg.content === "$testbot") {
+    msg.channel.send(useSlashCommands());
     msg.channel.send("Bot is online. **" + getPing() + "**");
     console.log("testbot - Answer sent (old prefix)");
     return;
   }
 
   // ---------------------------------------------------------------
-  // $dl - Provides the download link for the specified project.
+  // $dl <project> - Provides the download link for the specified project.
   // ---------------------------------------------------------------
   if (msg.content.startsWith("$dl")) {
+    msg.channel.send(useSlashCommands());
     // Projects:
     dl_medieval =
       "**Medieval City**\nTrailer: https://youtu.be/UdZT_NrsbzQ\nWebsite: <https://theminer02.com/downloads>\nPlanetMinecraft: <https://bit.ly/3sScNG5>\nDirect: <https://bit.ly/32QA68T>";
@@ -142,7 +152,7 @@ client.on("messageCreate", msg => {
     var project = msg.content.split(" ");
     // console.log(project);
 
-    if (project[1] == "MedievalCity" || project[1] == "Medieval" || project[1] == "medieval") {
+    if (project[1] == "MedievalCity" || project[1] == "Medievalcity" || project[1] == "medievalcity") {
       msg.channel.send(dl_medieval);
     } else if (project[1] == "TM-Zoo" || project[1] == "tmzoo" || project[1] == "tm-zoo") {
       msg.channel.send(dl_zoo);
@@ -163,9 +173,10 @@ client.on("messageCreate", msg => {
   }
 
   // ---------------------------------------------------------------
-  // $faq - Answers some general questions.
+  // $faq <topic> - Answers some general questions.
   // ---------------------------------------------------------------
   if (msg.content.startsWith("$faq")) {
+    msg.channel.send(useSlashCommands());
     // Topics:
     faq_invite =
       "**__Discord__**\n**User:** TheMiner_02#4863\n**Invite:** https://discord.gg/hrFSdAr23T";
@@ -206,13 +217,37 @@ client.on("messageCreate", msg => {
     console.log("faq - " + topic[1] + " sent (old prefix)");
     return;
   }
+  
+  // ---------------------------------------------------------------
+  // $idea <messageid> <a/d> - Accept / Decline suggestions
+  // ---------------------------------------------------------------
+  /*
+  if (msg.content.startsWith("$idea")) {
+    var idea_split = msg.content.split(" ")
+    
+    const suggestion_channel = await client.channels.fetch("914098259784531989");
+    var suggestion = suggestion_channel.messages.fetch('"' + idea_split[1] + '"')
+    var action = idea_split[2]
+
+    if (action == "a" || action == "accept") {
+      suggestion.react("✔");
+      console.log('Suggestion - Accepted: ' + suggestion_id );
+    };
+    if (action == "d" || action == "decline") {
+      suggestion.react("❌");
+      console.log('Suggestion - Declined: ' + suggestion_id );
+    };
+    return;
+  };
+  */
 
   // ---------------------------------------------------------------
   // $ - Unknown commands
   // ---------------------------------------------------------------
   if (msg.content.startsWith("$")) {
-    msg.channel.send("```I dont know this command. Try $help```");
-    console.log("Unknown command - Answer sent (old prefix)");
+    msg.channel.send(useSlashCommands());
+    msg.channel.send("```I dont know this command. Try /help```");
+    console.log("Unknown command - Answer sent");
     return;
   }
 
@@ -234,7 +269,7 @@ client.on("messageCreate", msg => {
   }
   
   // ---------------------------------------------------------------
-  // Add voting options & tread to suggestions
+  // Add voting options & thread to suggestions
   // ---------------------------------------------------------------
   if (msg.channel == 912433891976040498  || msg.channel == 914098259784531989) {
     
@@ -257,6 +292,7 @@ client.on("messageCreate", msg => {
         });
       console.log(`Suggestion - Created thread: ${thread.name}`);
     }
+  return;
   };
 });
 
