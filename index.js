@@ -242,6 +242,39 @@ client.on("messageCreate", async msg => {
   */
 
   // ---------------------------------------------------------------
+  // $dev_welcome - Test welcome message
+  // ---------------------------------------------------------------
+  if (msg.content.startsWith("$dev_welcome")) {
+    const welcomeEmbed = {
+    color: 0xff8000,
+    title: 'Welcome!',
+    author: {
+      name: 'TM-Bot',
+      icon_url: 'https://i.imgur.com/AfFp7pu.png',
+      url: 'https://theminer02.com',
+    },
+    description: "👋 Welcome <@" + msg.author + "> to the **TheMiner_02** discord server!",
+    thumbnail: {
+      url: msg.author.avatarURL,
+    },
+    fields: [
+      {
+        name: 'Information',
+        value: 'Make sure to read the rules',
+      },
+      ],
+    timestamp: new Date(),
+    footer: {
+      text: '© TheMiner_02 2021',
+      icon_url: 'https://i.imgur.com/AfFp7pu.png',
+    },
+  };
+
+  msg.channel.send({ embeds: [welcomeEmbed] });
+    return;
+  }
+
+  // ---------------------------------------------------------------
   // $ - Unknown commands
   // ---------------------------------------------------------------
   if (msg.content.startsWith("$")) {
@@ -295,6 +328,30 @@ client.on("messageCreate", async msg => {
   return;
   };
 });
+
+/*
+client.on('guildMemberAdd', member => {
+  member.guild.channels.get('826034078623989820').send({embed: {
+  color: 16744448,
+  title: "Welcome!",
+  url: "https://theminer02.com",
+  description: "👋 Welcome *" + member + "* to the **TheMiner_02** discord server!",
+  fields: [{
+      name: "Information",
+      value: "info"
+    }
+  ],
+  timestamp: new Date(),
+  footer: {
+    icon_url: client.user.avatarURL,
+    text: "© TheMiner_02 2021"
+  }
+}}); });
+*/
+
+function welcomeMessage(member) {
+  
+}
 
 // ---
 
