@@ -26,6 +26,11 @@ function useSlashCommands() {
   return text;
 }
 
+function getRandomBlock() {
+  // Math.floor(Math.random() * 20 + 1)
+  return "https://static.wikia.nocookie.net/minecraft_de_gamepedia/images/c/c0/Magmablock.gif/revision/latest/scale-to-width-down/1200?cb=20200309170432";
+}
+
 // ---
 
 client.on("ready", () => {
@@ -245,32 +250,35 @@ client.on("messageCreate", async msg => {
   // $dev_welcome - Test welcome message
   // ---------------------------------------------------------------
   if (msg.content.startsWith("$dev_welcome")) {
+    member = msg.guild.members.cache.get('310473472575012865')
+    
     const welcomeEmbed = {
     color: 0xff8000,
     title: 'Welcome!',
     author: {
       name: 'TM-Bot',
-      icon_url: 'https://i.imgur.com/AfFp7pu.png',
+      icon_url: 'https://github.com/theminer02/TMBot-JS/blob/main/profile.png?raw=true',
       url: 'https://theminer02.com',
     },
-    description: "👋 Welcome <@" + msg.author + "> to the **TheMiner_02** discord server!",
+    description: "👋 Welcome <@" + member + "> to the **TheMiner_02** discord server!",
     thumbnail: {
-      url: msg.author.avatarURL,
+      url: getRandomBlock(),
     },
     fields: [
       {
         name: 'Information',
         value: 'Make sure to read the rules',
       },
-      ],
+    ],
     timestamp: new Date(),
     footer: {
       text: '© TheMiner_02 2021',
-      icon_url: 'https://i.imgur.com/AfFp7pu.png',
+      icon_url: 'https://github.com/theminer02/TMBot-JS/blob/main/tm-logo.png?raw=true',
     },
-  };
+    };
 
-  msg.channel.send({ embeds: [welcomeEmbed] });
+    msg.channel.send({ embeds: [welcomeEmbed] });
+    console.log("dev_welcome - Sent welcome message");
     return;
   }
 
@@ -329,29 +337,37 @@ client.on("messageCreate", async msg => {
   };
 });
 
-/*
 client.on('guildMemberAdd', member => {
-  member.guild.channels.get('826034078623989820').send({embed: {
-  color: 16744448,
-  title: "Welcome!",
-  url: "https://theminer02.com",
-  description: "👋 Welcome *" + member + "* to the **TheMiner_02** discord server!",
-  fields: [{
-      name: "Information",
-      value: "info"
-    }
-  ],
-  timestamp: new Date(),
-  footer: {
-    icon_url: client.user.avatarURL,
-    text: "© TheMiner_02 2021"
-  }
-}}); });
-*/
+  const welcomeEmbed = {
+    color: 0xff8000,
+    title: 'Welcome!',
+    author: {
+      name: 'TM-Bot',
+      icon_url: 'https://github.com/theminer02/TMBot-JS/blob/main/profile.png?raw=true',
+      url: 'https://theminer02.com',
+    },
+    description: "👋 Welcome <@" + member + "> to the **TheMiner_02** discord server!",
+    thumbnail: {
+      url: getRandomBlock(),
+    },
+    fields: [
+      {
+        name: 'Information',
+        value: 'Make sure to read the rules',
+      },
+    ],
+    timestamp: new Date(),
+    footer: {
+      text: '© TheMiner_02 2021',
+      icon_url: 'https://github.com/theminer02/TMBot-JS/blob/main/tm-logo.png?raw=true',
+    },
+  };
 
-function welcomeMessage(member) {
-  
-}
+msg.channel.send({ embeds: [welcomeEmbed] });
+console.log("Sent welcome message");
+return;
+
+},)
 
 // ---
 
