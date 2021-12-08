@@ -20,6 +20,7 @@ function showHelp() {
 }
 
 function getPing() {
+  // its not real o.O shhh
   generatedPing = Math.floor(Math.random() * 44 + 1);
   ping = generatedPing + "ms";
   return ping;
@@ -44,11 +45,11 @@ client.on("ready", () => {
   
   client.user.setPresence({
     status: "online",
-    activity: {
-      name: "Subscribe!",
-      type: "PLAYING",
+    activities: [{
+      name: "/help",
+      type: "LISTENING",
       url: "https://www.youtube.com/theminer02",
-    },
+    }],
   });
 
   // ---------------------------------------------------------------
@@ -147,7 +148,7 @@ client.on("messageCreate", async msg => {
   // $dl <project> - Provides the download link for the specified project.
   // ---------------------------------------------------------------
   if (msg.content.startsWith("$dl")) {
-    msg.channel.send(useSlashCommands());
+    // msg.channel.send(useSlashCommands());
     // Projects:
     dl_medieval =
       "**Medieval City**\nTrailer: https://youtu.be/UdZT_NrsbzQ\nWebsite: <https://theminer02.com/downloads>\nPlanetMinecraft: <https://bit.ly/3sScNG5>\nDirect: <https://bit.ly/32QA68T>";
@@ -187,7 +188,7 @@ client.on("messageCreate", async msg => {
   // $faq <topic> - Answers some general questions.
   // ---------------------------------------------------------------
   if (msg.content.startsWith("$faq")) {
-    msg.channel.send(useSlashCommands());
+    // msg.channel.send(useSlashCommands());
     // Topics:
     faq_invite =
       "**__Discord__**\n**User:** TheMiner_02#4863\n**Invite:** https://discord.gg/hrFSdAr23T";
@@ -260,7 +261,7 @@ client.on("messageCreate", async msg => {
     
     const welcomeEmbed = {
     color: 0xff8000,
-    title: 'Welcome!',
+    title: 'New member!',
     author: {
       name: 'TM-Bot',
       icon_url: 'https://github.com/theminer02/TMBot-JS/blob/main/profile.png?raw=true',
@@ -347,7 +348,7 @@ client.on("messageCreate", async msg => {
 client.on('guildMemberAdd', member => {
   const welcomeEmbed = {
     color: 0xff8000,
-    title: 'Welcome!',
+    title: 'New member!',
     author: {
       name: 'TM-Bot',
       icon_url: 'https://github.com/theminer02/TMBot-JS/blob/main/profile.png?raw=true',
