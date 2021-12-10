@@ -2,10 +2,10 @@ const { Client, Intents } = require('discord.js');
 const keepAlive = require("./server");
 
 const client = new Client({
-	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
+	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_MEMBERS],
 });
 
-const botVersion = "v5.0-dev";
+const botVersion = "v4.7-public";
 
 // ---
 
@@ -34,7 +34,7 @@ function useSlashCommands() {
 function getRandomBlock() {
   var blocks = JSON.parse(blocksjson);
   var i = Math.floor(Math.random() * (22 - 0 + 1) + 0)
-  console.log("Random Block selected: " + blocks[i].name)
+  console.log("Block selected: " + blocks[i].name);
   return blocks[i].url;
 }
 
@@ -197,7 +197,7 @@ client.on("messageCreate", async msg => {
     faq_bot =
       "**__Bot__**\n**Commands:** Use `/help`\n**General Info:** I made this bot on my own and its completely customized for me. You can't use it on your own server.\n**Version:** " +
       botVersion +
-      "\n**Nerd stuff:** ~300 lines of code, ~12 hours of work - I'm using `discord.js v13.2.0` & the bot is currently hosted on Replit\n*Uptime:* <https://stats.uptimerobot.com/rVzlqsrnNL/787785032>";
+      "\n**Nerd stuff:** ~500 lines of code, ~13 hours of work - I'm using `discord.js v13.2.0` & the bot is currently hosted on Replit\n*Uptime:* <https://stats.uptimerobot.com/rVzlqsrnNL/787785032>";
     faq_donate =
       "**__Donate__**\nI don't know why you would want to donate something, but if you do, here you go:\n<https://streamlabs.com/theminer_02/tip>";
     faq_list =
@@ -275,7 +275,7 @@ client.on("messageCreate", async msg => {
     fields: [
       {
         name: 'Information',
-        value: 'Make sure to read the <#324243990977183747>',
+        value: 'Make sure to read the rules',
       },
     ],
     timestamp: new Date(),
@@ -283,12 +283,11 @@ client.on("messageCreate", async msg => {
       text: '© TheMiner_02 2021',
       icon_url: 'https://github.com/theminer02/TMBot-JS/blob/main/tm-logo.png?raw=true',
     },
-    };
-
-    msg.channel.send({ embeds: [welcomeEmbed] });
-    console.log("dev_welcome - Sent welcome message");
-    return;
   }
+  client.channels.cache.get('827895336898658324').send({ embeds: [welcomeEmbed] });
+  console.log("Sent welcome message");
+  return;
+  };
 
   // ---------------------------------------------------------------
   // $ - Unknown commands
@@ -372,7 +371,7 @@ client.on('guildMemberAdd', member => {
     },
   };
 
-client.guild.channels.get('826034078623989820').send({ embeds: [welcomeEmbed] });
+client.channels.cache.get('826034078623989820').send({ embeds: [welcomeEmbed] });
 console.log("Sent welcome message");
 return;
 
