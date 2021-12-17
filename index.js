@@ -1,4 +1,6 @@
+const { REST } = require('@discordjs/rest');
 const { Client, Collection, Intents } = require('discord.js');
+const { Routes } = require('discord-api-types/v9');
 const fs = require('fs');
 const keepAlive = require("./server");
 
@@ -6,7 +8,7 @@ const client = new Client({
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_MEMBERS],
 });
 
-const botVersion = "v4.9-dev";
+const botVersion = "v4.9-public";
 
 // ---
 
@@ -28,7 +30,7 @@ function getPing() {
 }
 
 function useSlashCommands() {
-  text = "My bot will stop responding to the `$` prefix on **December 31st 2021**\nTry out slash commands!\n";
+  text = "My bot will stop responding to the `$` prefix on **December 31st 2021**\nTry out slash commands!\n---";
   return text;
 }
 
@@ -59,14 +61,35 @@ client.on("ready", () => {
 // ---------------------------------------------------------------
 
 client.commands = new Collection();
+const commands = [];
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
-	// Set a new item in the Collection
-	// With the key as the command name and the value as the exported module
 	client.commands.set(command.data.name, command);
 }
+
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	commands.push(command.data.toJSON());
+}
+
+const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
+
+(async () => {
+	try {
+		console.log('INFO: Refreshing slash-commands...');
+
+		await rest.put(
+			Routes.applicationGuildCommands(process.env.APPID, process.env.GUILD),
+			{ body: commands },
+		);
+
+		console.log('INFO: Slash-Commands refreshed');
+	} catch (error) {
+		console.error(error);
+	}
+})();
 
 // ---
 // Respond to Slash Commands
@@ -116,7 +139,7 @@ client.on("messageCreate", async msg => {
   // $dl <project> - Provides the download link for the specified project.
   // ---------------------------------------------------------------
   if (msg.content.startsWith("$dl")) {
-    // msg.channel.send(useSlashCommands());
+    msg.channel.send(useSlashCommands());
     // Projects:
     dl_medieval =
       "**Medieval City**\nTrailer: https://youtu.be/UdZT_NrsbzQ\nWebsite: <https://theminer02.com/downloads>\nPlanetMinecraft: <https://bit.ly/3sScNG5>\nDirect: <https://bit.ly/32QA68T>";
@@ -156,7 +179,7 @@ client.on("messageCreate", async msg => {
   // $faq <topic> - Answers some general questions.
   // ---------------------------------------------------------------
   if (msg.content.startsWith("$faq")) {
-    // msg.channel.send(useSlashCommands());
+    msg.channel.send(useSlashCommands());
     // Topics:
     faq_invite =
       "**__Discord__**\n**User:** TheMiner_02#4863\n**Invite:** https://discord.gg/hrFSdAr23T";
