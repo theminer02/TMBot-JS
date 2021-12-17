@@ -1,11 +1,12 @@
-const { Client, Intents } = require('discord.js');
+const { Client, Collection, Intents } = require('discord.js');
+const fs = require('fs');
 const keepAlive = require("./server");
 
 const client = new Client({
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_MEMBERS],
 });
 
-const botVersion = "v4.7-public";
+const botVersion = "v4.9-dev";
 
 // ---
 
@@ -51,71 +52,38 @@ client.on("ready", () => {
       url: "https://www.youtube.com/theminer02",
     }],
   });
+})
 
-  // ---------------------------------------------------------------
-  // Slash commands
-  // ---------------------------------------------------------------
-  
-  client.api.applications(process.env.APPID).guilds(process.env.GUILD).commands.post({
-      data: {
-          name: "testbot",
-          description: "Checks if the bot is online"
-          // possible options here e.g. options: [{...}]
-      }
-  });
-  
-  client.api.applications(process.env.APPID).guilds(process.env.GUILD).commands.post({
-      data: {
-          name: "help",
-          description: "Shows a list of all commands"
-          // possible options here e.g. options: [{...}]
-      }
-  });
-  
-  /*
-  client.api.applications(process.env.APPID).guilds(process.env.GUILD).commands.post({
-      data: {
-          name: "download",
-          description: "Get download links for my projects"
-          // options: [{...}]
-      }
-  });
-  */
+// ---------------------------------------------------------------
+// Slash commands
+// ---------------------------------------------------------------
 
-  // ---
-  // Respond to Slash Commands
-  // ---
+client.commands = new Collection();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-  client.ws.on('INTERACTION_CREATE', async interaction => {
-      const command = interaction.data.name.toLowerCase();
-      const args = interaction.data.options;
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	// Set a new item in the Collection
+	// With the key as the command name and the value as the exported module
+	client.commands.set(command.data.name, command);
+}
 
-  // $testbot - Checks if the bot is online.
-      if (command === 'testbot'){ 
-        client.api.interactions(interaction.id, interaction.token).callback.post({
-          data: {
-            type: 4,
-            data: {
-              content: "Bot is online. **" + getPing() + "**"
-            }
-          }
-        })
-        console.log("testbot - Answer sent");
-      }
+// ---
+// Respond to Slash Commands
+// ---
 
-  // $help - Shows the list of commands.
-      if (command === 'help'){ 
-        client.api.interactions(interaction.id, interaction.token).callback.post({
-          data: {
-            type: 4,
-            data: {
-              content: showHelp()
-            }
-          }
-        })
-        console.log("help - Answer sent");
-      }
-  });
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
+
+	const command = client.commands.get(interaction.commandName);
+	if (!command) return;
+
+	try {
+		await command.execute(interaction);
+	} catch (error) {
+		console.error(error);
+		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+	}
 });
 
 // ---
@@ -197,7 +165,7 @@ client.on("messageCreate", async msg => {
     faq_bot =
       "**__Bot__**\n**Commands:** Use `/help`\n**General Info:** I made this bot on my own and its completely customized for me. You can't use it on your own server.\n**Version:** " +
       botVersion +
-      "\n**Nerd stuff:** ~500 lines of code, ~13 hours of work - I'm using `discord.js v13.2.0` & the bot is currently hosted on Replit\n*Uptime:* <https://stats.uptimerobot.com/rVzlqsrnNL/787785032>";
+      "\n**Nerd stuff:** ~500 lines of code, ~13 hours of work - I'm using `discord.js v13.2.0` & the bot is currently hosted on Replit\n**Uptime:** <https://stats.uptimerobot.com/rVzlqsrnNL/787785032>";
     faq_donate =
       "**__Donate__**\nI don't know why you would want to donate something, but if you do, here you go:\n<https://streamlabs.com/theminer_02/tip>";
     faq_list =
@@ -275,7 +243,7 @@ client.on("messageCreate", async msg => {
     fields: [
       {
         name: 'Information',
-        value: 'Make sure to read the rules',
+        value: 'Make sure to read the <#324243990977183747>',
       },
     ],
     timestamp: new Date(),
@@ -361,7 +329,7 @@ client.on('guildMemberAdd', member => {
     fields: [
       {
         name: 'Information',
-        value: 'Make sure to read the rules',
+        value: 'Make sure to read the <#324243990977183747>',
       },
     ],
     timestamp: new Date(),
