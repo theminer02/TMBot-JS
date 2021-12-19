@@ -14,7 +14,7 @@ module.exports = {
 			.addChoice('TM-Bay', 'dl_tmbay')
   ),
 
-	async execute(interaction) {
+	execute: async (interaction) => {
     const project = interaction.options.getString('project');
     
     text_medievalcity =

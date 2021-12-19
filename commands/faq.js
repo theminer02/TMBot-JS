@@ -14,7 +14,7 @@ module.exports = {
 			.addChoice('Donate', 'faq_donate')
   ),
 
-	async execute(interaction) {
+	execute: async (interaction) => {
     const topic = interaction.options.getString('topic');
     const botVersion = "v4.9-public";
     

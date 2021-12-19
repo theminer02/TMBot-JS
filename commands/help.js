@@ -10,7 +10,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 	.setName('help')
 	.setDescription('Shows a list of all commands'),
-	async execute(interaction) {
+	execute: async (interaction) => {
 		await interaction.reply(showHelp());
     console.log("help - Answer sent");
 	},
