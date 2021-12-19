@@ -45,7 +45,7 @@ function getRandomBlock() {
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
-  
+
   client.user.setPresence({
     status: "online",
     activities: [{
@@ -90,6 +90,7 @@ const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 		console.error(error);
 	}
 })();
+
 
 // ---
 // Respond to Slash Commands
@@ -220,29 +221,6 @@ client.on("messageCreate", async msg => {
     console.log("faq - " + topic[1] + " sent (old prefix)");
     return;
   }
-  
-  // ---------------------------------------------------------------
-  // $idea <messageid> <a/d> - Accept / Decline suggestions
-  // ---------------------------------------------------------------
-  /*
-  if (msg.content.startsWith("$idea")) {
-    var idea_split = msg.content.split(" ")
-    
-    const suggestion_channel = await client.channels.fetch("914098259784531989");
-    var suggestion = suggestion_channel.messages.fetch('"' + idea_split[1] + '"')
-    var action = idea_split[2]
-
-    if (action == "a" || action == "accept") {
-      suggestion.react("✔");
-      console.log('Suggestion - Accepted: ' + suggestion_id );
-    };
-    if (action == "d" || action == "decline") {
-      suggestion.react("❌");
-      console.log('Suggestion - Declined: ' + suggestion_id );
-    };
-    return;
-  };
-  */
 
   // ---------------------------------------------------------------
   // $dev_welcome - Test welcome message
