@@ -12,9 +12,9 @@ This is a simple bot with a few commands that I made for my own Discord-Server.
 
 **/testbot**  - Check if the bot is online.
 
-**$dl <project>** - Provides the download link for the specified project. Use `$dl list` for a list of projects.
+**/dl <project>** - Provides the download link for the specified project.
 
-**$faq <topic>** - Answers some general questions. Use `$faq list` for a list of topics.
+**/faq <topic>** - Answers some general questions.
 
 ---
 
@@ -28,4 +28,4 @@ This is a simple bot with a few commands that I made for my own Discord-Server.
 
 ---
 
-**Bot-Version:** v4.7-public
+**Bot-Version:** v4.9-public
