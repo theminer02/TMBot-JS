@@ -91,7 +91,6 @@ const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 	}
 })();
 
-
 // ---
 // Respond to Slash Commands
 // ---
@@ -223,9 +222,9 @@ client.on("messageCreate", async msg => {
   }
 
   // ---------------------------------------------------------------
-  // $dev_welcome - Test welcome message
+  // $TMdev-int_welcome - Test welcome message
   // ---------------------------------------------------------------
-  if (msg.content.startsWith("$dev_welcome")) {
+  if (msg.content.startsWith("$TMdev-int_welcome")) {
     member = msg.guild.members.cache.get('310473472575012865');
     
     const welcomeEmbed = {
@@ -312,6 +311,10 @@ client.on("messageCreate", async msg => {
   return;
   };
 });
+  
+// ---------------------------------------------------------------
+// Send welcome message
+// ---------------------------------------------------------------
 
 client.on('guildMemberAdd', member => {
   const welcomeEmbed = {
