@@ -2,16 +2,16 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-	.setName('faq')
-	.setDescription('Answers frequently asked questions')
+	.setName('info')
+	.setDescription('Gives some simple information for the specified topic')
 	.addStringOption(option =>
 		option.setName('topic')
 			.setDescription('Specify the topic')
 			.setRequired(true)
-			.addChoice('Invite', 'faq_invite')
-			.addChoice('Links', 'faq_links')
-			.addChoice('Bot', 'faq_bot')
-			.addChoice('Donate', 'faq_donate')
+			.addChoice('Invite', 'info_invite')
+			.addChoice('Links', 'info_links')
+			.addChoice('Bot', 'info_bot')
+			.addChoice('Donate', 'info_donate')
   ),
 
 	execute: async (interaction) => {
@@ -28,16 +28,16 @@ module.exports = {
       "**__Donate__**\nI don't know why you would want to donate something, but if you do, here you go:\n<https://streamlabs.com/theminer_02/tip>";
     
     switch (topic) {
-    case "faq_invite":
+    case "info_invite":
       await interaction.reply(text_invite);
       break;
-    case "faq_links":
+    case "info_links":
       await interaction.reply(text_links);
       break;
-    case "faq_bot":
+    case "info_bot":
       await interaction.reply(text_bot);
       break;
-    case "faq_donate":
+    case "info_donate":
       await interaction.reply(text_donate);
       break;
     default:
@@ -45,6 +45,6 @@ module.exports = {
       break;
     }
 
-    console.log("faq - Answer sent (" + topic + ")");
+    console.log("info - Answer sent (" + topic + ")");
 	},
 };

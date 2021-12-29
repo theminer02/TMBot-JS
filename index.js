@@ -18,7 +18,7 @@ const blocksjson = '[{"name":"Magma","url":"https://i.imgur.com/qFhWOB7.gif"},{"
 
 function showHelp() {
   commands =
-    "__The commands:__\n\n**$help** - Shows this list of commands.\n**$testbot** - Checks if the bot is online.\n**$dl <project>** - Provides the download link for the specified project. Use `$dl list` for a list of projects.\n**$faq <topic>** - Answers some general questions. Use `$faq list` for a list of topics.";
+    "__The commands:__\n\n**$help** - Shows this list of commands.\n**$testbot** - Checks if the bot is online.\n**$dl <project>** - Provides the download link for the specified project. Use `$dl list` for a list of projects.\n**$info <topic>** - Gives some simple information for the specified topic. Use `$info list` for a list of topics.";
   return commands;
 }
 
@@ -178,46 +178,46 @@ client.on("messageCreate", async msg => {
   // ---------------------------------------------------------------
   // $faq <topic> - Answers some general questions.
   // ---------------------------------------------------------------
-  if (msg.content.startsWith("$faq")) {
+  if (msg.content.startsWith("$info")) {
     msg.channel.send(useSlashCommands());
     // Topics:
-    faq_invite =
+    info_invite =
       "**__Discord__**\n**User:** TheMiner_02#4863\n**Invite:** https://discord.gg/hrFSdAr23T";
-    faq_links =
+    info_links =
       "**__My social media__**\n**YouTube:** <https://youtube.com/theminer02>\n**Instagram:** <https://instagram.com/theminer_02>\n**Twitter:** <https://twitter.com/theminer_02>\n**PlanetMinecraft:** <https://planetminecraft.com/member/theminer02>\n**Website:** <https://theminer02.com/>\n**Twitch *(german)*:** <https://www.twitch.tv/theminer_02>";
-    faq_bot =
+    info_bot =
       "**__Bot__**\n**Commands:** Use `/help`\n**General Info:** I made this bot on my own and its completely customized for me. You can't use it on your own server.\n**Version:** " +
       botVersion +
       "\n**Nerd stuff:** ~500 lines of code, ~13 hours of work - I'm using `discord.js v13.2.0` & the bot is currently hosted on Replit\n**Uptime:** <https://stats.uptimerobot.com/rVzlqsrnNL/787785032>";
-    faq_donate =
+    info_donate =
       "**__Donate__**\nI don't know why you would want to donate something, but if you do, here you go:\n<https://streamlabs.com/theminer_02/tip>";
-    faq_list =
+    info_list =
       "**The available topics are:**\n- Invite\n- Links\n- Bot\n- Donate";
-    faq_unknown =
-      "**__Unknown Topic__**\nUse `$faq list` for a list of the topics.";
+    info_unknown =
+      "**__Unknown Topic__**\nUse `$info list` for a list of the topics.";
 
     var topic = msg.content.split(" ");
     // console.log(faqtopic);
 
     if (topic[1] == "Invite" || topic[1] == "invite") {
-      msg.channel.send(faq_invite);
+      msg.channel.send(info_invite);
     } else if (topic[1] == "Links" || topic[1] == "links") {
-      msg.channel.send(faq_links);
+      msg.channel.send(info_links);
     } else if (topic[1] == "Bot" || topic[1] == "bot") {
-      msg.channel.send(faq_bot);
+      msg.channel.send(info_bot);
     } else if (topic[1] == "Donate" || topic[1] == "donate") {
-      msg.channel.send(faq_donate);
+      msg.channel.send(info_donate);
     } else if (topic[1] == "List" || topic[1] == "list") {
-      msg.channel.send(faq_list);
-      console.log("faq - Topic List sent (old prefix)");
+      msg.channel.send(info_list);
+      console.log("info - Topic List sent (old prefix)");
       return;
     } else {
-      msg.channel.send(faq_unknown);
-      console.log("faq - Unknown Topic sent (old prefix)");
+      msg.channel.send(info_unknown);
+      console.log("info - Unknown Topic sent (old prefix)");
       return;
     }
 
-    console.log("faq - " + topic[1] + " sent (old prefix)");
+    console.log("info - " + topic[1] + " sent (old prefix)");
     return;
   }
 
@@ -256,7 +256,7 @@ client.on("messageCreate", async msg => {
   console.log("Sent welcome message");
   return;
   };
-
+  
   // ---------------------------------------------------------------
   // $ - Unknown commands
   // ---------------------------------------------------------------
