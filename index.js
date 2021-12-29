@@ -17,9 +17,7 @@ const blocksjson = '[{"name":"Magma","url":"https://i.imgur.com/qFhWOB7.gif"},{"
 // ---
 
 function showHelp() {
-  commands =
-    "__The commands:__\n\n**$help** - Shows this list of commands.\n**$testbot** - Checks if the bot is online.\n**$dl <project>** - Provides the download link for the specified project. Use `$dl list` for a list of projects.\n**$info <topic>** - Gives some simple information for the specified topic. Use `$info list` for a list of topics.";
-  return commands;
+  return "Please use /help";
 }
 
 function getPing() {
