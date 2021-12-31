@@ -29,8 +29,8 @@ client.on("ready", () => {
   client.user.setPresence({
     status: "online",
     activities: [{
-      name: "with slash-commands",
-      type: "PLAYING",
+      name: "/help",
+      type: "LISTENING",
       url: "https://www.youtube.com/theminer02",
     }],
   });
