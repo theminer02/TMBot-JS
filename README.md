@@ -8,6 +8,9 @@ This is a simple bot with a few commands that I made for my own Discord-Server.
 ---
 
 ## Commands
+
+> Info: The `$` prefix is no longer supported. Please use slash commands.
+
 **/help**     - Shows a list of all commands.
 
 **/testbot**  - Check if the bot is online.
@@ -28,4 +31,4 @@ This is a simple bot with a few commands that I made for my own Discord-Server.
 
 ---
 
-**Bot-Version:** v4.9-public
+**Bot-Version:** v5.0-public

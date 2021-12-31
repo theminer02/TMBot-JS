@@ -16,7 +16,7 @@ module.exports = {
 
 	execute: async (interaction) => {
     const topic = interaction.options.getString('topic');
-    const botVersion = "v4.9-public";
+    const botVersion = "v5.0-public";
     
     text_invite =
       "**__Discord__**\n**User:** TheMiner_02#4863\n**Invite:** https://discord.gg/hrFSdAr23T";
