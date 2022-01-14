@@ -91,15 +91,6 @@ client.on('interactionCreate', async interaction => {
 
 client.on("messageCreate", async msg => {
   if (msg.author.bot) return;
-  
-  // ---------------------------------------------------------------
-  // $ - Old prefix - remove on 5.1.22
-  // ---------------------------------------------------------------
-  if (msg.content.startsWith("$")) {
-    msg.reply("```Commands with \"$\" prefix are no longer supported. Please use slash commands.```");
-    console.log("old prefix - Answer sent");
-    return;
-  }
 
   // ---------------------------------------------------------------
   // Add reaction to messages that contain TM-Bot
