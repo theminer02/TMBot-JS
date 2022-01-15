@@ -12,6 +12,7 @@ module.exports = {
 			.addChoice('Links', 'info_links')
 			.addChoice('Bot', 'info_bot')
 			.addChoice('Donate', 'info_donate')
+			.addChoice('Builder', 'info_builder')
   ),
 
 	execute: async (interaction) => {
@@ -26,6 +27,8 @@ module.exports = {
       "**__Bot__**\n**Commands:** Use `/help`\n**General Info:** I made this bot on my own and its completely customized for me. You can't use it on your own server.\n**Version:** " + botVersion + "\n**Nerd stuff:** ~350 lines of code, ~14 hours of work - I'm using `discord.js v13.2.0` & the bot is currently hosted on Replit\n**Uptime:** <https://stats.uptimerobot.com/rVzlqsrnNL/787785032>";
     text_donate =
       "**__Donate__**\nI don't know why you would want to donate something, but if you do, here you go:\n<https://www.tipeeestream.com/theminer02/donation>";
+    text_builder =
+      "**__Builder__**\nAnyone can obtain the builder role, as long as we think that your builds are good enough.\nMore infos and application here: <https://forms.gle/awDxfenGtYo6ytBb7>";
     
     switch (topic) {
     case "info_invite":
@@ -39,6 +42,9 @@ module.exports = {
       break;
     case "info_donate":
       await interaction.reply(text_donate);
+      break;
+    case "info_builder":
+      await interaction.reply(text_builder);
       break;
     default:
       await interaction.reply("Something went wrong!");
