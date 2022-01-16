@@ -147,7 +147,7 @@ client.on('guildMemberAdd', member => {
     title: 'New member!',
     author: {
       name: 'TM-Bot',
-      icon_url: 'https://github.com/theminer02/TMBot-JS/blob/main/profile.png?raw=true',
+      icon_url: 'https://github.com/theminer02/TMBot-JS/blob/main/assets/profile.png?raw=true',
       url: 'https://theminer02.com',
     },
     description: "👋 Welcome <@" + member + "> to the **TheMiner_02** discord server!",
@@ -163,8 +163,8 @@ client.on('guildMemberAdd', member => {
     ],
     timestamp: new Date(),
     footer: {
-      text: '© TheMiner_02 2021',
-      icon_url: 'https://github.com/theminer02/TMBot-JS/blob/main/tm-logo.png?raw=true',
+      text: '© TheMiner_02 2022',
+      icon_url: 'https://github.com/theminer02/TMBot-JS/blob/main/assets/tm-logo.png?raw=true',
     },
   };
 
