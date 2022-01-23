@@ -171,7 +171,6 @@ client.on('guildMemberAdd', member => {
 client.channels.cache.get('826034078623989820').send({ embeds: [welcomeEmbed] });
 console.log("Sent welcome message");
 return;
-
 },)
 
 // ---

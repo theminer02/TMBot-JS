@@ -1,5 +1,13 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
+// -----------------------------
+// Data for YouTube
+// -----------------------------
+
+// ...
+
+// -----------------------------
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("stats")
@@ -10,7 +18,6 @@ module.exports = {
         .setDescription("Specify the social media")
         .setRequired(true)
         .addChoice("YouTube", "stats_yt")
-        .addChoice("Discord", "stats_dc")
     ),
 
   execute: async (interaction) => {
@@ -32,46 +39,15 @@ module.exports = {
       fields: [
         {
           name: "Subscribers",
-          value: formatNumber(yt_subs),
+          value: "123,123,123",
         },
         {
           name: "Total videos",
-          value: formatNumber(yt_videos),
+          value: "123,123,123",
         },
         {
           name: "Total views",
-          value: formatNumber(yt_views),
-        },
-      ],
-      timestamp: new Date(),
-      footer: {
-        text: "© TheMiner_02 2022",
-        icon_url:
-          "https://github.com/theminer02/TMBot-JS/blob/main/assets/tm-logo.png?raw=true",
-      },
-    };
-
-    const text_dc = {
-      color: 0x5865f2,
-      title: "Discord Stats",
-      author: {
-        name: "TM-Bot",
-        icon_url:
-          "https://github.com/theminer02/TMBot-JS/blob/main/assets/profile.png?raw=true",
-        url: "https://theminer02.com",
-      },
-      thumbnail: {
-        url: "https://cdn.discordapp.com/icons/310662617981255682/4e5086005d00c1cd057b86b9d721dea8.webp",
-        dynamic: true,
-      },
-      fields: [
-        {
-          name: "Members (Bots)",
-          value: formatNumber(dc_members) + " (" + dc_bots + ")",
-        },
-        {
-          name: "Total channels",
-          value: dc_channels,
+          value: "123,123,123",
         },
       ],
       timestamp: new Date(),
@@ -85,9 +61,6 @@ module.exports = {
     switch (media) {
       case "stats_yt":
         await interaction.reply({ embeds: [text_yt] });
-        break;
-      case "stats_dc":
-        await interaction.reply({ embeds: [text_dc] });
         break;
       default:
         await interaction.reply("Something went wrong!");
