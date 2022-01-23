@@ -1,10 +1,28 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const https = require('https');
+
+const channelid = "UCDgBkUJDqnYlsHOd9NO0UhQ"
 
 // -----------------------------
 // Data for YouTube
 // -----------------------------
 
-// ...
+function yt_getSubCount() {
+  https.get("https://www.googleapis.com/youtube/v3/channels?part=statistics&id=" + channelid + "&key=" + process.env.GOOGLEAPI, (res) => {
+    console.log('statusCode:', res.statusCode);
+    console.log('headers:', res.headers);
+
+    res.on('data', (d) => {
+      console.log('data:', d);
+      console.log(d['items'] /*[0]['statistics']['subscriberCount'] */)
+    });
+
+  }).on('error', (e) => {
+    console.error(e);
+  });
+
+  // return (data['items'][0]['statistics']['subscriberCount'])
+}
 
 // -----------------------------
 
@@ -39,7 +57,7 @@ module.exports = {
       fields: [
         {
           name: "Subscribers",
-          value: "123,123,123",
+          value: yt_getSubCount(),
         },
         {
           name: "Total videos",
@@ -58,9 +76,27 @@ module.exports = {
       },
     };
 
+    const text_inProgress = {
+      color: 0xff0000,
+      title: "Stats",
+      author: {
+        name: "TM-Bot",
+        icon_url:
+          "https://github.com/theminer02/TMBot-JS/blob/main/assets/profile.png?raw=true",
+        url: "https://theminer02.com",
+      },
+      fields: [
+        {
+          name: "Not done",
+          value: "This feature is not done yet.",
+        },
+      ],
+    };
+
     switch (media) {
       case "stats_yt":
-        await interaction.reply({ embeds: [text_yt] });
+        await interaction.reply({ embeds: [text_inProgress] });
+        console.log(yt_getSubCount());
         break;
       default:
         await interaction.reply("Something went wrong!");
