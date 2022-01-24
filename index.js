@@ -3,7 +3,7 @@ const { Client, Collection, Intents } = require('discord.js');
 const { Routes } = require('discord-api-types/v9');
 const fs = require('fs');
 const keepAlive = require("./server");
-const infoData = require('../info.json')
+const infoData = require('./info.json')
 
 const botVersion = infoData.botVersion;
 const discordjs = infoData.discordjs;
@@ -188,6 +188,8 @@ return;
 // ---
 
 keepAlive();
+console.log("---")
 console.log("Bot version: " + botVersion)
-console.log("discord.js version: " + discordjs)
+console.log(discordjs)
+console.log("---")
 client.login(process.env.TOKEN);
