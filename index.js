@@ -3,12 +3,14 @@ const { Client, Collection, Intents } = require('discord.js');
 const { Routes } = require('discord-api-types/v9');
 const fs = require('fs');
 const keepAlive = require("./server");
+const infoData = require('../info.json')
+
+const botVersion = infoData.botVersion;
+const discordjs = infoData.discordjs;
 
 const client = new Client({
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_MEMBERS],
 });
-
-const botVersion = "v5.2-public";
 
 // ---
 
@@ -186,4 +188,6 @@ return;
 // ---
 
 keepAlive();
+console.log("Bot version: " + botVersion)
+console.log("discord.js version: " + discordjs)
 client.login(process.env.TOKEN);
