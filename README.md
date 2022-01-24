@@ -29,4 +29,4 @@ This is a simple bot with a few commands that I made for my own Discord-Server.
 
 ---
 
-**Bot-Version:** v5.0-public
+**Bot-Version:** v5.2-public

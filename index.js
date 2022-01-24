@@ -8,7 +8,7 @@ const client = new Client({
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_MEMBERS],
 });
 
-const botVersion = "v5.0-public";
+const botVersion = "v5.2-public";
 
 // ---
 
@@ -90,11 +90,21 @@ client.on('interactionCreate', async interaction => {
 });
 
 client.on("messageCreate", async msg => {
-  if (msg.author.bot) return;
+
+  // ---------------------------------------------------------------
+  // Automatically publish messages in #videonews
+  // ---------------------------------------------------------------
+
+  if (msg.channel == 325987106046345216) {
+    msg.crosspost()
+      .then(() => console.log('Published message: ' + msg.content))
+      .catch(console.error);
+  }
 
   // ---------------------------------------------------------------
   // Add reaction to messages that contain TM-Bot
   // ---------------------------------------------------------------
+
   if (
     msg.mentions.has(client.user.id) ||
     msg.content.includes("tmbot") ||
