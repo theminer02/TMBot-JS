@@ -41,7 +41,9 @@ module.exports = {
   execute: async (interaction) => {
     const media = interaction.options.getString("media");
 
-    const text_yt = {
+    // Store embeds in variables
+
+    const embed_yt = {
       color: 0xff0000,
       title: "YouTube Stats",
       author: {
@@ -76,7 +78,7 @@ module.exports = {
       },
     };
 
-    const text_inProgress = {
+    const embed_inProgress = {
       color: 0xff0000,
       title: "Stats",
       author: {
@@ -93,15 +95,19 @@ module.exports = {
       ],
     };
 
+    // Get media and reply
+
     switch (media) {
       case "stats_yt":
-        await interaction.reply({ embeds: [text_inProgress] });
-        console.log(yt_getSubCount());
+        await interaction.reply({ embeds: [embed_inProgress] });
+        // console.log(yt_getSubCount());
         break;
       default:
         await interaction.reply("Something went wrong!");
         break;
     }
+
+    // Log
 
     console.log("stats - Answer sent (" + media + ")");
   },

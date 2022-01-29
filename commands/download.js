@@ -16,6 +16,8 @@ module.exports = {
 
 	execute: async (interaction) => {
     const project = interaction.options.getString('project');
+
+    // Store answers in variables
     
     text_medievalcity =
       "**Medieval City**\nTrailer: https://youtu.be/UdZT_NrsbzQ\nWebsite: <https://theminer02.com/downloads>\nPlanetMinecraft: <https://bit.ly/3sScNG5>\nDirect: <https://bit.ly/32QA68T>";
@@ -25,6 +27,8 @@ module.exports = {
       "**Hytale Modpack**\nVideo: https://youtu.be/oPFat5Vholk\nWebsite: <https://theminer02.com/downloads>\nDirect: <https://bit.ly/32UXoKS>";
     text_tmbay = "**TM-Bay**\nFirst episode: https://youtu.be/Ek3i-mjWk7s\n*There is currently no download available*";
     
+    // Get project and reply
+
     switch (project) {
     case "dl_medievalcity":
       await interaction.reply(text_medievalcity);
@@ -42,6 +46,8 @@ module.exports = {
       await interaction.reply("Something went wrong!");
       break;
     }
+
+    // Log
 
     console.log("download - Answer sent (" + project + ")");
 	},

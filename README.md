@@ -9,13 +9,13 @@ This is a simple bot with a few commands that I made for my own Discord-Server.
 
 ## Commands
 
-**/help**     - Shows a list of all commands.
+`/help`     - Shows a list of all commands.
 
-**/testbot**  - Check if the bot is online.
+`/testbot`  - Check if the bot is online.
 
-**/download <project>** - Provides the download link for the specified project.
+`/download [project]` - Provides the download link for the specified project.
 
-**/info <topic>** - Gives some simple information for the specified topic.
+`/info [topic]` - Gives some simple information for the specified topic.
 
 ---
 

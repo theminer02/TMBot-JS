@@ -1,6 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const infoData = require('../info.json')
 
+// Save data from ../info.json in variables
+
 const botVersion = infoData.botVersion;
 const codeLines = infoData.codeLines;
 const workHours = infoData.workHours;
@@ -23,6 +25,8 @@ module.exports = {
 
 	execute: async (interaction) => {
     const topic = interaction.options.getString('topic');
+
+    // Store answers in variables
     
     text_invite =
       "**__Discord__**\n**User:** TheMiner_02#4863\n**Invite:** https://discord.gg/hrFSdAr23T";
@@ -35,6 +39,8 @@ module.exports = {
     text_builder =
       "**__Builder__**\nAnyone can obtain the builder role, as long as we think that your builds are good enough.\nMore infos and application here: <https://forms.gle/awDxfenGtYo6ytBb7>";
     
+    // Get topic and reply
+
     switch (topic) {
     case "info_invite":
       await interaction.reply(text_invite);
@@ -55,6 +61,8 @@ module.exports = {
       await interaction.reply("Something went wrong!");
       break;
     }
+
+    // Log
 
     console.log("info - Answer sent (" + topic + ")");
 	},

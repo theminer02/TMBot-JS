@@ -13,6 +13,7 @@ const client = new Client({
 });
 
 // ---
+// Blocks for welcome message
 
 const blocksjson = '[{"name":"Magma","url":"https://i.imgur.com/qFhWOB7.gif"},{"name":"Grass","url":"https://i.imgur.com/Bs2bdoj.png"},{"name":"Amethyst","url":"https://i.imgur.com/pwH2QoM.png"},{"name":"Ancient Debris","url":"https://i.imgur.com/6549b5t.png"},{"name":"Beehive","url":"https://i.imgur.com/KKyapfN.png"},{"name":"Cactus","url":"https://i.imgur.com/4vcKCoZ.png"},{"name":"Command Block","url":"https://i.imgur.com/lMYHJ2P.png"},{"name":"Crimson","url":"https://i.imgur.com/CypyIoV.png"},{"name":"Cut Coper","url":"https://i.imgur.com/kwyAEzC.png"},{"name":"Deepslate Tiles","url":"https://i.imgur.com/V8u61F5.png"},{"name":"Dried Kelp","url":"https://i.imgur.com/xcdMWfL.png"},{"name":"Ender Chest","url":"https://i.imgur.com/LwXFOlr.png"},{"name":"Furnace","url":"https://i.imgur.com/5gT85AR.png"},{"name":"Glowstone","url":"https://i.imgur.com/U7Egv7A.png"},{"name":"Light Blue Glazed Terracotta","url":"https://i.imgur.com/Y1HQHL6.png"},{"name":"Moss","url":"https://i.imgur.com/3BWZ2mT.png"},{"name":"Packed Ice","url":"https://i.imgur.com/ofG90G8.png"},{"name":"Quartz Pillar","url":"https://i.imgur.com/Q799f74.png"},{"name":"Red Mushroom","url":"https://i.imgur.com/iiU8eeb.png"},{"name":"Redstone Lamp","url":"https://i.imgur.com/B4FMrPG.png"},{"name":"TNT","url":"https://i.imgur.com/s4h6h9t.png"},{"name":"USB-Charger","url":"https://i.imgur.com/YjTtuE0.png"},{"name":"Yellow Coral","url":"https://i.imgur.com/1yMILsa.png"}]'
 
@@ -23,6 +24,8 @@ function getRandomBlock() {
   return blocks[i].url;
 }
 
+// ---
+// Main
 // ---
 
 client.on("ready", () => {
@@ -41,6 +44,8 @@ client.on("ready", () => {
 // ---------------------------------------------------------------
 // Slash commands
 // ---------------------------------------------------------------
+
+// Load slash commands from ./commands
 
 client.commands = new Collection();
 const commands = [];
@@ -90,6 +95,10 @@ client.on('interactionCreate', async interaction => {
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
+
+// ---
+// Execute on every message sent
+// ---
 
 client.on("messageCreate", async msg => {
 
@@ -185,6 +194,8 @@ console.log("Sent welcome message");
 return;
 },)
 
+// ---
+// Start bot & log info
 // ---
 
 keepAlive();
