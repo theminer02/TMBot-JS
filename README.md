@@ -17,6 +17,13 @@ This is a simple bot with a few commands that I made for my own Discord-Server.
 
 `/info [topic]` - Gives some simple information for the specified topic.
 
+## Other functionalities:
+
+- Welcome message for new members
+- Automatic message publishing
+- Semi-automatic suggestion system
+- Some audit-log functionalities (WIP)
+
 ---
 
 ## My Social Media
@@ -29,4 +36,4 @@ This is a simple bot with a few commands that I made for my own Discord-Server.
 
 ---
 
-**Bot-Version:** v5.2-public
+**Bot-Version:** v5.3-public
