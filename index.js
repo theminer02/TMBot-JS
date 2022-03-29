@@ -9,7 +9,7 @@ const botVersion = infoData.botVersion;
 const discordjs = infoData.discordjs;
 
 const client = new Client({
-	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_MEMBERS],
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_MEMBERS],
 });
 
 // ---
@@ -53,30 +53,30 @@ const commands = [];
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.data.name, command);
+  const command = require(`./commands/${file}`);
+  client.commands.set(command.data.name, command);
 }
 
 for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	commands.push(command.data.toJSON());
+  const command = require(`./commands/${file}`);
+  commands.push(command.data.toJSON());
 }
 
 const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 
 (async () => {
-	try {
-		console.log('INFO: Refreshing slash-commands...');
+  try {
+    console.log('INFO: Refreshing slash-commands...');
 
-		await rest.put(
-			Routes.applicationGuildCommands(process.env.APPID, process.env.GUILD),
-			{ body: commands },
-		);
+    await rest.put(
+      Routes.applicationGuildCommands(process.env.APPID, process.env.GUILD),
+      { body: commands },
+    );
 
-		console.log('INFO: Slash-Commands refreshed');
-	} catch (error) {
-		console.error(error);
-	}
+    console.log('INFO: Slash-Commands refreshed');
+  } catch (error) {
+    console.error(error);
+  }
 })();
 
 // ---
@@ -84,17 +84,17 @@ const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 // ---
 
 client.on('interactionCreate', async interaction => {
-	if (!interaction.isCommand()) return;
+  if (!interaction.isCommand()) return;
 
-	const command = client.commands.get(interaction.commandName);
-	if (!command) return;
+  const command = client.commands.get(interaction.commandName);
+  if (!command) return;
 
-	try {
-		await command.execute(interaction, client);
-	} catch (error) {
-		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-	}
+  try {
+    await command.execute(interaction, client);
+  } catch (error) {
+    console.error(error);
+    await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+  }
 });
 
 // ---
@@ -130,12 +130,12 @@ client.on("messageCreate", async msg => {
     console.log("Added a reaction");
     return;
   }
-  
+
   // ---------------------------------------------------------------
   // Add voting options & thread to suggestions
   // ---------------------------------------------------------------
-  if (msg.channel == 912433891976040498  || msg.channel == 914098259784531989) {
-    
+  if (msg.channel == 912433891976040498 || msg.channel == 914098259784531989) {
+
     // voting options
     msg.react("🔼");
     msg.react("🔽");
@@ -148,14 +148,14 @@ client.on("messageCreate", async msg => {
 
     async function createTread() {
       const thread = await msg.startThread({
-          name: thread_name,
-          autoArchiveDuration: 1440,
-          // type: 'GUILD_PRIVATE_THREAD',
-          reason: 'Create thread for suggestion',
-        });
+        name: thread_name,
+        autoArchiveDuration: 1440,
+        // type: 'GUILD_PRIVATE_THREAD',
+        reason: 'Create thread for suggestion',
+      });
       console.log(`Suggestion - Created thread: ${thread.name}`);
     }
-  return;
+    return;
   };
 });
 
@@ -190,10 +190,10 @@ client.on('guildMemberAdd', member => {
     },
   };
 
-client.channels.cache.get('826034078623989820').send({ embeds: [welcomeEmbed] });
-console.log("Sent welcome message");
-return;
-},)
+  client.channels.cache.get('826034078623989820').send({ embeds: [welcomeEmbed] });
+  console.log("Sent welcome message");
+  return;
+})
 
 // ---------------------------------------------------------------
 // Log message edits
