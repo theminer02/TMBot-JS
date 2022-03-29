@@ -199,7 +199,7 @@ return;
 // Log message edits
 // ---------------------------------------------------------------
 
-client.on('messageUpdate', (oldMessage, newMessage) =>  {
+client.on('messageUpdate', (oldMessage, newMessage) => {
   const messageupdateEmbed = {
     color: 0x45b6fe,
     title: '📝 A message was updated',
@@ -232,10 +232,14 @@ client.on('messageUpdate', (oldMessage, newMessage) =>  {
     },
   };
 
-client.channels.cache.get('510772850542510100').send({ embeds: [messageupdateEmbed] });
-console.log("Message updated in " + newMessage.channel.name);
-return;
-},)
+  if (newMessage.author.id != client.user.id) {
+    client.channels.cache.get('510772850542510100').send({ embeds: [messageupdateEmbed] });
+    console.log("Message updated in " + newMessage.channel.name);
+    return;
+  } else {
+    return // Message sent by TM-Bot (Most certainly /testbot answer) -> do not log
+  };
+})
 
 // ---
 // Start bot & log info
