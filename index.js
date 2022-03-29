@@ -196,41 +196,15 @@ client.on('guildMemberAdd', member => {
 })
 
 // ---------------------------------------------------------------
-// Logging guild member updates
+// Give standard roles after screening passed
 // ---------------------------------------------------------------
 
 client.on('guildMemberUpdate', (oldMember, newMember) => {
-  // ---
-  // Give join roles after screening passed
   if (oldMember.pending && !newMember.pending) {
     newMember.addRole("837710794287611916"); // Visitor
     newMember.addRole("865878054302646292"); // ────────| Level |────────
     newMember.addRole("865878747257634827"); // ────────| Other |────────
     console.log(newMember.name + " received standard roles")
-  }
-
-  // ---
-  // Log username changes
-  if (oldMember.name != newMember.name) {
-    const namechangeEmbed = {
-        color: 0xff1d18,
-        title: '📝 ' + oldMember.name + ' changed their name',
-        fields: [
-          {
-            name: 'New name',
-            value: "<@" + newMember.id + ">",
-            inline: true,
-          },
-        ],
-        timestamp: new Date(),
-        footer: {
-          text: 'Audit-Log by TM-Bot',
-          icon_url: "",
-        },
-      };
-  
-    client.channels.cache.get('510772850542510100').send({ embeds: [namechangeEmbed] });
-    console.log(oldMember.name + " changed their name to " + newMember.name);
   }
 });
 
