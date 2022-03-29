@@ -201,9 +201,10 @@ client.on('guildMemberAdd', member => {
 
 client.on('guildMemberUpdate', (oldMember, newMember) => {
   if (oldMember.pending && !newMember.pending) {
-    member.addRole("837710794287611916"); // Visitor
-    member.addRole("865878054302646292"); // ────────| Level |────────
-    member.addRole("865878747257634827"); // ────────| Other |────────
+    newMember.addRole("837710794287611916"); // Visitor
+    newMember.addRole("865878054302646292"); // ────────| Level |────────
+    newMember.addRole("865878747257634827"); // ────────| Other |────────
+    console.log(newMember.name + " received standard roles")
   }
 });
 
