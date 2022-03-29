@@ -241,6 +241,43 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
   };
 })
 
+// ---------------------------------------------------------------
+// Log deleted messages
+// ---------------------------------------------------------------
+
+client.on('messageDelete', message => {
+  const messagedeleteEmbed = {
+    color: 0xff1d18,
+    title: '❌ A message was deleted',
+    fields: [
+      {
+        name: 'Channel',
+        value: "<#" + message.channel + ">",
+        inline: true,
+      },
+      {
+        name: 'Author',
+        value: "<@" + message.author + ">",
+        inline: true,
+      },
+      {
+        name: 'Content',
+        value: "" + message.content + "",
+        inline: false,
+      },
+    ],
+    timestamp: new Date(),
+    footer: {
+      text: 'Audit-Log by TM-Bot',
+      icon_url: "",
+    },
+  };
+  
+  client.channels.cache.get('510772850542510100').send({ embeds: [messagedeleteEmbed] });
+  console.log("Message deleted in " + message.channel.name);
+  return
+})
+
 // ---
 // Start bot & log info
 // ---
