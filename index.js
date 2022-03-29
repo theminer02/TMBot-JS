@@ -196,6 +196,18 @@ client.on('guildMemberAdd', member => {
 })
 
 // ---------------------------------------------------------------
+// Give standard roles after screening passed
+// ---------------------------------------------------------------
+
+client.on('guildMemberUpdate', (oldMember, newMember) => {
+  if (oldMember.pending && !newMember.pending) {
+    member.addRole("837710794287611916"); // Visitor
+    member.addRole("865878054302646292"); // ────────| Level |────────
+    member.addRole("865878747257634827"); // ────────| Other |────────
+  }
+});
+
+// ---------------------------------------------------------------
 // Log message edits
 // ---------------------------------------------------------------
 
