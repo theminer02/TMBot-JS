@@ -213,7 +213,8 @@ client.on('guildMemberUpdate', (oldMember, newMember) => {
 // ---------------------------------------------------------------
 
 client.on('messageUpdate', (oldMessage, newMessage) => {
-  const messageupdateEmbed = {
+  if (newMessage.author.id != client.user.id) {
+    const messageupdateEmbed = {
     color: 0x45b6fe,
     title: '📝 A message was updated',
     fields: [
@@ -243,9 +244,8 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
       text: 'Audit-Log by TM-Bot',
       icon_url: "",
     },
-  };
-
-  if (newMessage.author.id != client.user.id) {
+    };
+    
     client.channels.cache.get('510772850542510100').send({ embeds: [messageupdateEmbed] });
     console.log("Message updated in " + newMessage.channel.name);
     return;
